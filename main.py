@@ -1,0 +1,2 @@
+import exampleimport
+exampleimport.printHello()
