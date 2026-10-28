@@ -1,2 +1,0 @@
-import exampleimport
-exampleimport.printHello()
