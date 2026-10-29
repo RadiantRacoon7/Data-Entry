@@ -85,13 +85,6 @@ while True:
                 print("Invalid file name, please try again.")
                 continue
             break
-        if not os.path.exists(f"./data/{username}/{file_name}.txt"):
-            continue
-        os.remove(f"./data/{username}/{file_name}.txt")
-        print("File successfully deleted!")
-        continue
-    elif option == '4':
-        print("Exiting the program.")
         with open(f"./data/{username}/{file_name}.txt", "a") as file:
             file.write("")
         print("File created successfully!")
@@ -108,6 +101,7 @@ while True:
             continue
         os.remove(f"./data/{username}/{file_name}.txt")
         print("File successfully deleted!")
+        
         continue
     elif option == '4':
         print("Exiting the program.")
