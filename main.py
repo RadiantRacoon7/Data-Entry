@@ -23,9 +23,10 @@ while True:
         password = input("Enter your password: ")
         registerUser(username, password)
     elif choice == '2':
-        print("Login functionality is not implemented yet.")
+        break
     else:
         print("Invalid choice. Please enter 1 or 2.")
+        continue
 
 while True:
     username = input("Enter your username (or type 'exit' to quit): ")
@@ -34,3 +35,18 @@ while True:
         continue
 
     password = input("Enter your password: ")
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+    try:
+        with open("users.json", "r") as file:
+            for line in file:
+                user_data = json.loads(line)
+                if user_data.get("username") == username and user_data.get("password") == password_hash:
+                    print("Login successful.")
+                    break
+            else:
+                print("Invalid username or password.")
+                continue
+            break
+    except FileNotFoundError:
+        print("Invalid username or password.")
+
