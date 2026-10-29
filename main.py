@@ -53,12 +53,20 @@ while True:
     except FileNotFoundError:
         print("Invalid username or password.")
 
-print("Choose an operation to perform: ")
-print("1. Create a file")
-print("2. Edit a file")
-print("3. Delete a file")
-
 while True:
+    user_files = [
+        name[:-4]
+        for name in os.listdir(f"./data/{username}")
+        if name.endswith(".txt") and os.path.isfile(f"./data/{username}/{name}")
+    ]
+    print("Files:")
+    for file_name in user_files:
+        print(f" - {file_name}")
+    print("Choose an operation to perform: ")
+    print("1. Create a file")
+    print("2. Edit a file")
+    print("3. Delete a file")
+    print("4. Exit")
     option = input()
     if option == '1':
         while True:
@@ -84,7 +92,9 @@ while True:
         os.remove(f"./data/{username}/{file_name}.txt")
         print("File successfully deleted!")
         continue
+    elif option == '4':
+        print("Exiting the program.")
+        quit()
     else:
         print("Invalid Option")
         continue
-    {"username": "test", "password": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"}
