@@ -4,6 +4,16 @@ import os
 import subprocess
 
 def registerUser(username, password):
+    try:
+        with open("users.json", "r") as file:
+            for line in file:
+                user_data = json.loads(line)
+                if user_data.get("username") == username:
+                    print("That username already exists.")
+                    return
+    except FileNotFoundError:
+        pass
+
     user_data = {
         "username": username,
         "password": hashlib.sha256(password.encode()).hexdigest()
@@ -58,7 +68,13 @@ while True:
         name[:-4]
         for name in os.listdir(f"./data/{username}")
         if name.endswith(".txt") and os.path.isfile(f"./data/{username}/{name}")
-    ]
+    ]xists(f"./data/{username}/{file_name}.txt"):
+            continue
+        os.remove(f"./data/{username}/{file_name}.txt")
+        print("File successfully deleted!")
+        continue
+    elif option == '4':
+        print("Exiting the program.")
     print("Files:")
     for file_name in user_files:
         print(f" - {file_name}")
@@ -74,7 +90,13 @@ while True:
             if not file_name.isalpha():
                 print("Invalid file name, please try again.")
                 continue
-            break
+            breakxists(f"./data/{username}/{file_name}.txt"):
+            continue
+        os.remove(f"./data/{username}/{file_name}.txt")
+        print("File successfully deleted!")
+        continue
+    elif option == '4':
+        print("Exiting the program.")
         with open(f"./data/{username}/{file_name}.txt", "a") as file:
             file.write("")
         print("File created successfully!")
