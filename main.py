@@ -1,7 +1,7 @@
+import urwid
 import json
 import hashlib
 import os
-import subprocess
 
 def registerUser(username, password):
     try:
@@ -63,6 +63,22 @@ while True:
     except FileNotFoundError:
         print("Invalid username or password.")
 
+class PurePythonEditor:
+    def __init__(self, initial_text):
+        self.edit_widget = urwid.Edit(caption="", edit_text=initial_text, multiline=True)
+        self.body = urwid.ListBox(urwid.SimpleFocusListWalker([self.edit_widget]))
+        self.footer = urwid.Text(" [Ctrl+X] Save & Exit ")
+        self.frame = urwid.Frame(self.body, footer=self.footer)
+
+    def handle_input(self, key):
+        if key in ('ctrl x', 'ctrl X'):
+            raise urwid.ExitMainLoop()
+
+    def run(self):
+        loop = urwid.MainLoop(self.frame, unhandled_input=self.handle_input)
+        loop.run()
+        return self.edit_widget.get_edit_text()
+
 while True:
     user_files = [
         name[:-4]
@@ -91,9 +107,14 @@ while True:
         continue
     elif option == '2':
         file_name = input("What is the name of the file you would like to edit? ")
-        if not file_name.isalpha() or not os.path.exists(f"./data/{username}/{file_name}.txt"):
+        file_path = f"./data/{username}/{file_name}.txt"
+        if not file_name.isalpha() or not os.path.exists(file_path):
             continue
-        subprocess.run(["nano", f"./data/{username}/{file_name}.txt"])
+        with open(file_path, "r") as file:
+            current_text = file.read()
+        editor = PurePythonEditor(current_text)
+        with open(file_path, "w") as file:
+            file.write(editor.run())
         continue
     elif option == '3':
         file_name = input("What is the name of the file you want to delete? ")
