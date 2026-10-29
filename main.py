@@ -9,7 +9,7 @@ def registerUser(username, password):
             for line in file:
                 user_data = json.loads(line)
                 if user_data.get("username") == username:
-                    print("That username already exists.")
+                    print("Username already exists.")
                     return
     except FileNotFoundError:
         pass
@@ -68,13 +68,7 @@ while True:
         name[:-4]
         for name in os.listdir(f"./data/{username}")
         if name.endswith(".txt") and os.path.isfile(f"./data/{username}/{name}")
-    ]xists(f"./data/{username}/{file_name}.txt"):
-            continue
-        os.remove(f"./data/{username}/{file_name}.txt")
-        print("File successfully deleted!")
-        continue
-    elif option == '4':
-        print("Exiting the program.")
+    ]
     print("Files:")
     for file_name in user_files:
         print(f" - {file_name}")
@@ -90,7 +84,8 @@ while True:
             if not file_name.isalpha():
                 print("Invalid file name, please try again.")
                 continue
-            breakxists(f"./data/{username}/{file_name}.txt"):
+            break
+        if not os.path.exists(f"./data/{username}/{file_name}.txt"):
             continue
         os.remove(f"./data/{username}/{file_name}.txt")
         print("File successfully deleted!")
