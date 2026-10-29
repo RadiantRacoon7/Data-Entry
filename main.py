@@ -29,7 +29,7 @@ while True:
         continue
 
 while True:
-    username = input("Enter your username (or type 'exit' to quit): ")
+    username = input("Enter your username: ")
     if not username.isalpha():
         print("Invalid username. Please use only letters.")
         continue
